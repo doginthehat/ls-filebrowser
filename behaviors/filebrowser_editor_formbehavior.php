@@ -93,7 +93,7 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 			$files = $this->_controller->filebrowserPrepareData($this->viewData['recordId']);
 		else
 		{
-			$files = Backend::$events->fireEvent('filebrowser:onGetFiles', $this);
+			$files = Backend::$events->fireEvent('filebrowser:onGetFiles', $this->viewData['recordId'], $this);
 		
 			if (!$files)
 			{
@@ -272,7 +272,7 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 			$file->field = null;
 			
 			if (method_exists($this->_controller,'filebrowserBeforeSaveFile'))
-				$this->_controller->filebrowserBeforeSaveFile($file, $this, $recordId, $model);
+				$this->_controller->filebrowserBeforeSaveFile($file, $recordId, $model, $this);
 			else
 				Backend::$events->fireEvent('filebrowser:onBeforeSaveFile', $file, $this, $session_key);
 			
