@@ -232,10 +232,13 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 		$url = Backend_Html::controllerUrl();
 		$url = substr($url, 0, -1);
 		
+		
+		$ticket = method_exists($this->_controller,'filebrowserGetTicket') ? $this->_controller->filebrowserGetTicket() : Phpr::$security->getTicket();
+		
 		$parts = array(
 			$url,
 			'filebrowser_upload',
-			Phpr::$security->getTicket(),
+			$ticket,
 			$this->_controller->formGetEditSessionKey()
 		);
 
@@ -248,8 +251,6 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 	
 	public function filebrowser_upload($ticket, $session_key, $recordId = null)
 	{
-		traceLog('filebrowser_upload starts');
-
 		$this->_controller->suppressView();
 
 		$result = array();
@@ -272,9 +273,9 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 			$file->field = null;
 			
 			if (method_exists($this->_controller,'filebrowserBeforeSaveFile'))
-				$this->_controller->filebrowserBeforeSaveFile($file, $recordId, $model, $this);
+				$this->_controller->filebrowserBeforeSaveFile($file, $recordId, $model, $ticket, $this);
 			else
-				Backend::$events->fireEvent('filebrowser:onBeforeSaveFile', $file, $this, $session_key);
+				Backend::$events->fireEvent('filebrowser:onBeforeSaveFile', $file, $recordId, $model, $ticket, $this);
 			
 			
 			$file->save();

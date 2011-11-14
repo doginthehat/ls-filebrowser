@@ -38,7 +38,7 @@
 							'onUploadComplete': function(){
 								
 								// Reload page 1
-								$('Filebrowser_Editor_Formbehavior_Browse_Files').getForm().sendPhpr('edit_onFilebrowserSetPage', {extraFields: {pageIndex: 0}, update: 'Filebrowser_Editor_Formbehavior_Browse_Files', loadIndicator: {show: false, element: 'Filebrowser_Editor_Formbehavior_Browse_Files', hideOnSuccess: 1}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){$('Filebrowser_Editor_Formbehavior_Browse_Files').fireEvent('listUpdated')}});
+								$('Filebrowser_Editor_Formbehavior_Browse_Files').getForm().sendPhpr('<?=$this->getEventHandler('onFilebrowserSetPage')?>', {extraFields: {pageIndex: 0}, update: 'Filebrowser_Editor_Formbehavior_Browse_Files', loadIndicator: {show: false, element: 'Filebrowser_Editor_Formbehavior_Browse_Files', hideOnSuccess: 1}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){$('Filebrowser_Editor_Formbehavior_Browse_Files').fireEvent('listUpdated')}});
 								
 								// switch to first tab. Any better way?
 								Filebrowser_Core.tabManager.onTabClick(null, Filebrowser_Core.tabManager.tabs[0]);								
