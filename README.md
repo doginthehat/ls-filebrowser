@@ -15,8 +15,9 @@ filebrowser is defined as a behavior that can be added to an existing backend co
 
 To use it:
 
-1. Add Filebrowser_Editor_Formbehavior in the controller's `implement` list
-2. In your model's define_form_fields, patch the field's html editor config to add the Filebrowser button:
+1. Clone/download the source [from github](https://github.com/doginthehat/ls-filebrowser) and place it in a module folder called filebrowser
+2. Add Filebrowser_Editor_Formbehavior in your controller's `implement` list
+3. In your model's define_form_fields, patch the field's html editor config to add the Filebrowser button:
 	
 	
 		$editor_config = System_HtmlEditorConfig::get('cms', 'cms_page_content');
@@ -28,7 +29,7 @@ To use it:
 	
 	_This step would better if you could customize this directly from the editor settings section of the admin (/backdoor/system/editor_config/) but I couldn't find an easy way to do this (open to suggestions)_
 	
-3. [Optional] If your controller view uses a custom head block content [ie. `Phpr_View::beginBlock("head")`] to load resources, you *must* pass `true` to the matching `endBlock()`.
+4. [Optional] If your controller view uses a custom head block content [ie. `Phpr_View::beginBlock("head")`] to load resources, you *must* pass `true` to the matching `endBlock()`.
 	If you don't, because the filebrowser behaviour has already written to the view, your custom content will simply be ignore by the view engine on Lemonstand.
 	
 That's all that's required to get it going. By default it will show all the files available on the server.
@@ -152,6 +153,9 @@ Now for the annoying bit.
 I can't really see at this stage a better spot to add some of the required code for the module, and because of the problem mentioned in point 3 in the usage section above, you'll need to tweak the cms view to prevent the module from overwriting its own head content.
 _I did [request an additional event](http://forum.lemonstandapp.com/index.php?app=tracker&showissue=83) that would prevent that problem as it would give me a better hook spot. Maybe when that's fixed this won't be necessary.._
 
-In the mean time: Open `modules/cms/controllers/cms_pages/edit.htm' and add `true` to the first endBlock() - for the head section.
+In the mean time: Open `modules/cms/controllers/cms_pages/content.htm` and add `true` as a parameter to the first endBlock() - for the head section.
 
 That's it.
+
+
+_The file browser icon is from (famfamfam)[http://www.famfamfam.com/]_
