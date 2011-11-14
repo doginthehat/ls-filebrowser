@@ -20,13 +20,9 @@ To use it:
 	
 	
 		$editor_config = System_HtmlEditorConfig::get('cms', 'cms_page_content');
-		
 		$field = $this->add_form_field('my_rich_text')->tab('Somewhere')->renderAs(frm_html);
-		
 		$editor_config->apply_to_form_field($field);
-		
 		$field->htmlPlugins .= ',Filebrowser';
-		
 		$field->htmlButtons1 .= ',Filebrowser';
 	
 	
@@ -47,6 +43,49 @@ The function should return a collection of Db_File.
 filebrowser has its own default config. If you would like to customise this, simply copy the settings variable form the behavior class onto the controller and name it filebrowser_settings
 
 
+The default config is:
+
+	$settings = array(
+		'thumbnails'=>array(
+			'zoom'=>'fit',
+			'width'=>100,
+			'height'=>100,
+			'page_size'=>21
+		),
+		'insert'=>array(
+			'mode'=>'presets',	// only presets mode for now
+			'default'=>'Medium',
+			'options' => array(
+				'Thumbnail'=> array(
+					'zoom'=>'fit',
+					'width'=>100,
+					'height'=>100
+				),
+				'Medium'=> array(
+					'zoom'=>'keep_ratio',
+					'width'=>300,
+					'height'=>'auto'
+				),
+				'Large'=> array(
+					'zoom'=>'keep_ratio',
+					'width'=>500,
+					'height'=>'auto'
+				)
+			)
+		)
+	);
+
+The `thumbnails` section defines how the thumbnails list will look in the popup.
+
+The `insert` section will define how inserting images will work.
+
+Currently, it only works with _presets_ mode (i.e. predefined insertion settings, kind of like wordpress).
+
+_There's plans for a "custom" mode where the user can specify actual sizes and mode but that hasn't been implemented yet_
+
+_Note: there isn't a lot of checking on the quality of the settings array so if it's crashing you're probably messed up the format_
+
 #### Callback on upload
 
-If you ever need additional processing when a new file is uploaded through the behaviour, you can provide a filebrowserBeforeSaveFile($file, $recordId, $model) method in your controller.
+If you ever need additional processing when a new file is uploaded through the behaviour, you can provide a `filebrowserBeforeSaveFile($file, $recordId, $model)` method in your controller.
+
