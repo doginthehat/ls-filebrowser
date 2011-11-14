@@ -92,3 +92,66 @@ _Note: there isn't a lot of checking on the quality of the settings array so if 
 
 If you ever need additional processing when a new file is uploaded through the behaviour, you can provide a `filebrowserBeforeSaveFile($file, $recordId, $model)` method in your controller.
 
+### Adding the filebrowser to the cms pages controller (Editing Content)
+
+_I'm guessing someone will eventually want to do this_
+
+It's straight forward enough - though it currently needs tweaking some core files which is far from ideal (see below). 
+
+In a custom module, you'll need to hook into a couple of events as follow:
+
+	/*
+		First, subscribe to event onControllerReady.
+		Note, we use the generic onControllerReady event because there's no page-specific
+		event you can hook to when editing page content unfortunately.
+		
+		Add this line in your module's subscribeEvents method
+	*/
+	Backend::$events->addEvent('backend:onControllerReady', $this, 'on_controller_ready');
+
+	/*
+		Then add the code for the event handler 
+	*/
+	function on_controller_ready($controller)
+	{
+		if ($controller instanceof Cms_Pages)
+			$controller->extend_with('Filebrowser_Editor_Formbehavior');
+				
+	}
+
+
+	/*
+		You also need to extend the page model to add the Filebrowser button to the editor.
+
+		Add this line in your module's subscribeEvents method
+	*/
+	Backend::$events->addEvent('cms:onExtendPageForm', $this, 'on_extend_page_form');
+	
+	/*
+		Then add the code for the event handler 
+	*/
+	function on_extend_page_form($page, $context)
+	{
+		if ($context == 'content')
+		{
+			$blocks = $page->list_content_blocks();
+			foreach ($blocks as $block)
+			{
+				$column_name = 'content_block_'.$block->code;
+				$field = $page->find_form_field($column_name);
+	
+				$field->htmlPlugins .= ',Filebrowser';
+				$field->htmlButtons1 .= ',Filebrowser';
+					
+			}
+		}
+	}
+
+Now for the annoying bit.
+
+I can't really see at this stage a better spot to add some of the required code for the module, and because of the problem mentioned in point 3 in the usage section above, you'll need to tweak the cms view to prevent the module from overwriting its own head content.
+_I did [request an additional event](http://forum.lemonstandapp.com/index.php?app=tracker&showissue=83) that would prevent that problem as it would give me a better hook spot. Maybe when that's fixed this won't be necessary.._
+
+In the mean time: Open `modules/cms/controllers/cms_pages/edit.htm' and add `true` to the first endBlock() - for the head section.
+
+That's it.
