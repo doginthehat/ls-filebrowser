@@ -1,0 +1,48 @@
+	<div class="form850">
+		<?= Phpr_Form::openTag() ?>
+		
+		<input type='hidden' name="something" value="swiff.upload fails if there's no form data for some reason"/>
+			
+		<p>Please click the link below to select files.</p>
+
+				<div class="addFileLink" id="file_uploader">
+					<div id="select_files_container" class="invisible">
+						<a href="#" id="file_upload_link">Select file(s)</a>
+						<div class="progressInfo">
+							<img class="overall-progress progress invisible" src="phproad/modules/db/behaviors/db_formbehavior/resources/images/progressbar.gif"/>
+						</div>
+					</div>
+					<div class="upload_files_loading_indicator" id="upload_files_loading_indicator"><p class="loading">Loading...</p></div>
+				</div>
+				
+				<div class="uploaderContainer" id="file_upload_container"></div>
+
+				
+	
+				<div class="clear"></div>
+			</form>
+		</div>
+				<script type="text/javascript">
+					$('Filebrowser_Editor_Formbehavior_Browse').addEvent('popupLoaded', function(){
+						new FileUploader('file_uploader', {
+							'url': '<?= $this->filebrowserGetUploadUrl($recordId)?>', 
+							'debug':true,
+							'container': $('file_upload_container'), 
+							'target': 'file_upload_link',
+							'data': $('file_upload_container').getForm(),
+							'limitFiles': 1000,
+							'onLoad': function(){ 
+								$('upload_files_loading_indicator').hide();
+								$('select_files_container').removeClass('invisible');
+							},
+							'onUploadComplete': function(){
+								
+								// Reload page 1
+								$('Filebrowser_Editor_Formbehavior_Browse_Files').getForm().sendPhpr('edit_onFilebrowserSetPage', {extraFields: {pageIndex: 0}, update: 'Filebrowser_Editor_Formbehavior_Browse_Files', loadIndicator: {show: false, element: 'Filebrowser_Editor_Formbehavior_Browse_Files', hideOnSuccess: 1}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){$('Filebrowser_Editor_Formbehavior_Browse_Files').fireEvent('listUpdated')}});
+								
+								// switch to first tab. Any better way?
+								Filebrowser_Core.tabManager.onTabClick(null, Filebrowser_Core.tabManager.tabs[0]);								
+							}
+						});
+					});
+				</script>

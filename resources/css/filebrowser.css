@@ -1,0 +1,4 @@
+#Filebrowser_Editor_Formbehavior_Browse .files ul { clear: both; }
+#Filebrowser_Editor_Formbehavior_Browse .files li { float: left; cursor: pointer; margin: 0 15px 15px 0; border: 1px solid #ccc; }
+#Filebrowser_Editor_Formbehavior_Browse .options { padding-top: 1em; float: right; margin-right: 1em; }
+#Filebrowser_Editor_Formbehavior_Browse form { min-height: 420px; }

@@ -1,0 +1,55 @@
+<div id="Filebrowser_Editor_Formbehavior_Browse">
+	<h2>Browse images</h2>
+	<div class="content">
+	
+		<div class="tabs">
+			<div class="tabs" id="Filebrowser_Editor_Formbehavior_Browse_Tabs">
+				<div class="tabs-outer">
+					<div class="tabs-inner">
+						<ul id="form_tabsFilebrowser_Editor_Formbehavior_Browse" class="tabs_tabs">
+							<li class="round "><a onclick="return false" href="#tab_1">Browse</a></li>
+							<li class="round active"><a onclick="return false" href="#tab_2">Upload</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clear tab_separator"></div>
+
+			</div>
+		
+			<ul id="form_pagesFilebrowser_Editor_Formbehavior_Browse" class="tabs_pages">
+			<li id="tab_1" class="form_page hidden">
+				<div class="form850 files">
+					<?= Phpr_Form::openTag() ?>
+					<div class='options'>
+						<p>Insert images as:
+						<?php 
+						foreach($settings['insert']['options'] as $label=>$options): 
+						?>
+						<label><input type="radio" name='size' value="<?=$label?>" <?= $label==$settings['insert']['default'] ? 'checked="checked"' : ''?> /><?=$label?></label>
+						<?php 
+						endforeach; 
+						?>
+						</p>
+					</div>
+	
+					<?php $this->renderFiles($recordId);?>
+					<div class='clear'></div>
+					</form>
+				</div>
+			</li>
+			<li id="tab_2" class="form_page ">
+				<?php $this->renderUploadform();?>
+			</li>
+
+	</div>
+
+<script type="text/javascript">
+	window.addEvent('domready', function(){
+		Filebrowser_Core.tabManager = new TabManager('form_tabsFilebrowser_Editor_Formbehavior_Browse', 
+		  	'form_pagesFilebrowser_Editor_Formbehavior_Browse', 
+		  	{trackTab: true});
+		
+	});
+	
+	</script>
+</div>

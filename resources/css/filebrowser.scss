@@ -1,0 +1,28 @@
+$spacing:15px;
+
+#Filebrowser_Editor_Formbehavior_Browse {
+	
+	.files {
+		ul {
+			clear:both;
+		}
+		li {
+			float:left;
+			cursor:pointer;
+			margin:0 $spacing $spacing 0;
+			border:1px solid #ccc;
+		}
+		
+	}
+	
+	.options {
+		padding-top:1em;
+		float:right;
+		margin-right:1em;
+	}
+	
+	form {
+		min-height:420px;
+	}
+
+}

@@ -1,0 +1,28 @@
+	<div id='Filebrowser_Editor_Formbehavior_Browse_Files'>
+		<?= Backend_Html::ajaxPagination($pagination,
+			"$(this).getForm().sendPhpr('".$this->getEventHandler('onFilebrowserPrevPage')."', {update: 'Filebrowser_Editor_Formbehavior_Browse_Files', loadIndicator: {element: 'Filebrowser_Editor_Formbehavior_Browse_Files', hideOnSuccess: 1,  show: false}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){\$('Filebrowser_Editor_Formbehavior_Browse_Files').fireEvent('listUpdated')}});",
+			"$(this).getForm().sendPhpr('".$this->getEventHandler('onFilebrowserNextPage')."', {update: 'Filebrowser_Editor_Formbehavior_Browse_Files', loadIndicator: {element: 'Filebrowser_Editor_Formbehavior_Browse_Files', show: false, hideOnSuccess: 1 }, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){\$('Filebrowser_Editor_Formbehavior_Browse_Files').fireEvent('listUpdated')}});",
+			"$(this).getForm().sendPhpr('".$this->getEventHandler('onFilebrowserSetPage')."', {extraFields: {pageIndex: %s}, update: 'Filebrowser_Editor_Formbehavior_Browse_Files', loadIndicator: {show: false, element: 'Filebrowser_Editor_Formbehavior_Browse_Files', hideOnSuccess: 1}, onBeforePost: LightLoadingIndicator.show.pass('Loading...'), onComplete: LightLoadingIndicator.hide, onSuccess: function(){\$('Filebrowser_Editor_Formbehavior_Browse_Files').fireEvent('listUpdated')}});"
+		) ?>
+		<ul>
+		<?php
+		foreach($files as $file):
+		?>
+			<li 
+				style="width:<?php echo $settings['thumbnails']['width'];?>;height:<?php echo $settings['thumbnails']['height'];?>;"
+				image='<?= $file->id;?>'
+				>
+			<img src="<?= $file->getThumbnailPath($settings['thumbnails']['width'], $settings['thumbnails']['height'],true,array('mode' => 'zoom_fit'))?>"/>
+			</li>
+		
+		<?php
+		endforeach;
+		?>
+		</ul>
+	</div>
+	<script type='text/javascript'>
+		$$('.files li').each(function(item,total){
+			item.addEvent('click', Filebrowser_Core.send_to_editor.bind(item));
+		})
+
+	</script>
