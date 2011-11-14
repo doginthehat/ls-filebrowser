@@ -28,6 +28,9 @@ To use it:
 	
 	_This step would better if you could customize this directly from the editor settings section of the admin (/backdoor/system/editor_config/) but I couldn't find an easy way to do this (open to suggestions)_
 	
+3. [Optional] If your controller view uses a custom head block content [ie. `Phpr_View::beginBlock("head")`] to load resources, you *must* pass `true` to the matching `endBlock()`.
+	If you don't, because the filebrowser behaviour has already written to the view, your custom content will simply be ignore by the view engine on Lemonstand.
+	
 That's all that's required to get it going. By default it will show all the files available on the server.
 
 ### Customisation
