@@ -158,4 +158,4 @@ In the mean time: Open `modules/cms/controllers/cms_pages/content.htm` and add `
 That's it.
 
 
-_The file browser icon is from (famfamfam)[http://www.famfamfam.com/]_
+_The file browser icon is from [famfamfam](http://www.famfamfam.com/)_
