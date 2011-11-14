@@ -130,7 +130,7 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 			$page = $this->evalPageNumber() + 1;
 			$this->setPageNumber($page);
 		
-			$this->renderFiles();
+			$this->renderFiles($recordId);
 		}
 		catch (Exception $ex)
 		{
@@ -146,7 +146,7 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 			$page = $this->evalPageNumber() - 1;
 			$this->setPageNumber($page);
 		
-			$this->renderFiles();
+			$this->renderFiles($recordId);
 		}
 		catch (Exception $ex)
 		{
@@ -161,7 +161,7 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 		{
 			$this->setPageNumber(post('pageIndex'));
 		
-			$this->renderFiles();
+			$this->renderFiles($recordId);
 		}
 		catch (Exception $ex)
 		{
