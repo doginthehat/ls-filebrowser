@@ -11,7 +11,7 @@ class Filebrowser_Module extends Core_ModuleBase
 	 */
 	protected function createModuleInfo()
 	{
-		return new Core_ModuleInfo('Filebrowser', 'Adds filebrowser button to html editors', 'Dog in the hat');
+		return new Core_ModuleInfo('Filebrowser', 'Filebrowser button behavior for html editors', 'Dog in the hat');
 	}
 
 
