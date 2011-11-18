@@ -72,10 +72,8 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 		$this->renderPartial('browser');
 	}
 	
-	public function prepareData()
+	public function prepareSettings()
 	{
-		if ($this->prepared)
-			return;
 	
 		if ($this->_controller->filebrowser_settings)
 			$settings = $this->_controller->filebrowser_settings;
@@ -86,6 +84,17 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 		{
 			$settings = $new_settings;
 		}
+		
+		return $settings;
+	
+	}
+	
+	public function prepareData()
+	{
+		if ($this->prepared)
+			return;
+	
+		$settings = $this->prepareSettings();
 		
 		$this->viewData['settings'] = $settings;
 
@@ -175,13 +184,8 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 		try
 		{
 
-			$settings = self::$settings;
-		
-			if ($new_settings = Backend::$events->fireEvent('filebrowser:onFileBrowserSettings', $settings, $this))
-			{
-				$settings = $new_settings;
-			}
-			
+			$settings = $this->prepareSettings();
+
 			$image = post('image');
 			$size = post('size');
 
