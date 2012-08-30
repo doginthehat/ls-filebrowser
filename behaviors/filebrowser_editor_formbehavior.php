@@ -54,11 +54,18 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 
 		$this->_controller->addPublicAction('filebrowser_upload');
 
+		Backend::$events->addEvent('backend:onBeforeRenderLayout', $this, 'onBeforeRenderLayout');
+	}
+	
+	public function onBeforeRenderLayout($controller, $Name)
+	{
+		if ($Name !== null)
+		   return;
+		
 		Phpr_View::beginBlock( 'head' );
 		$this->renderPartial('init');
 		Phpr_View::endBlock( 'head' );
-
-
+		
 	}
 	
 	
