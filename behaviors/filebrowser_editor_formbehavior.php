@@ -89,7 +89,7 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 	
 		if ($new_settings = Backend::$events->fireEvent('filebrowser:onFileBrowserSettings', $settings, $this))
 		{
-			$settings = $new_settings;
+			$settings = $new_settings[0];
 		}
 		
 		return $settings;
