@@ -201,8 +201,15 @@ class Filebrowser_Editor_Formbehavior extends Phpr_ControllerBehavior
 			$file = Db_File::create()->find_by_id($image);
 			
 			$zoom = isset($setting['zoom']) ? $setting['zoom'] : 'fit';
+	
+			$args = array('mode' => $zoom);
 			
-			$path = $file->getThumbnailPath($setting['width'], $setting['height'],true,array('mode' => $zoom));
+			if ($new_args = Backend::$events->fireEvent('filebrowser:onGetImageUrlArgs', $args, $setting, $settings, $image, $this))
+			{
+				$args = $new_args[0];
+			}
+			
+			$path = $file->getThumbnailPath($setting['width'], $setting['height'],true,$args);
 		
 			$this->viewData['path'] = $path;
 			
